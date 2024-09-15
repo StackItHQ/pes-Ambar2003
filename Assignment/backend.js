@@ -33,8 +33,8 @@ const sheets = google.sheets({ version: 'v4', auth });
 
 const SHEET_ID = "1_XfcPmGKBKI4lC35l5HVQRUHofNlzut-RZwFaxQv2eo"; // Your Google Sheet ID
 
-// Route to update the database from Google Sheets
-app.post('/sync-db', async (req, res) => {
+//Route to update the database from Google Sheets
+app.post('/database', async (req, res) => {
   const { range, value } = req.body;
 
   // Assuming 'range' is like 'A1', 'B2' and so on
@@ -51,26 +51,52 @@ app.post('/sync-db', async (req, res) => {
   });
 });
 
+// const checkForUpdates = async () => {
+//   const sheetId = '1_XfcPmGKBKI4lC35l5HVQRUHofNlzut-RZwFaxQv2eo';
+//   const range = 'Sheet1!A1:Z1000';  // Adjust the range as needed
+
+//   const response = await sheets.spreadsheets.values.get({
+//     spreadsheetId: sheetId,
+//     range: range,
+//   });
+
+//   const rows = response.data.values;
+//   // Process rows and update the database accordingly
+//   rows.forEach((row, index) => {
+//     // Example: Update database based on row data
+//     const query = `UPDATE your_table SET your_column = '${row[1]}' WHERE id = ${index + 1}`;
+//     db.query(query, (err, result) => {
+//       if (err) {
+//         console.error('Error updating the database:', err);
+//       }
+//     });
+//   });
+// };
+// setInterval(checkForUpdates, 2000);
+
 // Route to sync Google Sheets from the database
-app.post('/sync-sheet', async (req, res) => {
+app.post('/sync-db', (req, res) => {
   const { range, value } = req.body;
 
-  try {
-    // Write to Google Sheets
-    const response = await sheets.spreadsheets.values.update({
-      spreadsheetId: SHEET_ID,
-      range: range,  // The range where you want to update
-      valueInputOption: 'RAW',
-      resource: {
-        values: [[value]]
-      }
-    });
+  // Extract row number from the range (assuming 'A1', 'B2', etc.)
+  let row = parseInt(range.slice(1));
 
-    res.status(200).json({ message: 'Google Sheet updated successfully' });
-  } catch (error) {
-    res.status(500).json({ error: 'Error updating Google Sheet' });
+  if (isNaN(row)) {
+    return res.status(400).json({ error: 'Invalid range format' });
   }
+
+  // SQL query to update the database
+  const query = `UPDATE your_table SET your_column = ? WHERE id = ?`;
+
+  db.query(query, [value, row], (err, result) => {
+    if (err) {
+      console.error('Error updating the database:', err);
+      return res.status(500).json({ error: 'Error updating the database' });
+    }
+    res.status(200).json({ message: 'Database updated successfully' });
+  });
 });
+
 
 // Start server
 const PORT = process.env.PORT || 5000;
