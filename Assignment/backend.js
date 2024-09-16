@@ -51,31 +51,8 @@ app.post('/database', async (req, res) => {
   });
 });
 
-// const checkForUpdates = async () => {
-//   const sheetId = '1_XfcPmGKBKI4lC35l5HVQRUHofNlzut-RZwFaxQv2eo';
-//   const range = 'Sheet1!A1:Z1000';  // Adjust the range as needed
-
-//   const response = await sheets.spreadsheets.values.get({
-//     spreadsheetId: sheetId,
-//     range: range,
-//   });
-
-//   const rows = response.data.values;
-//   // Process rows and update the database accordingly
-//   rows.forEach((row, index) => {
-//     // Example: Update database based on row data
-//     const query = `UPDATE your_table SET your_column = '${row[1]}' WHERE id = ${index + 1}`;
-//     db.query(query, (err, result) => {
-//       if (err) {
-//         console.error('Error updating the database:', err);
-//       }
-//     });
-//   });
-// };
-// setInterval(checkForUpdates, 2000);
-
 // Route to sync Google Sheets from the database
-app.post('/sync-db', (req, res) => {
+app.post('/database', (req, res) => {
   const { range, value } = req.body;
 
   // Extract row number from the range (assuming 'A1', 'B2', etc.)
