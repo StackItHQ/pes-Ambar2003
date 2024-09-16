@@ -49,7 +49,7 @@ We have a checklist at the bottom of this README file, which you should update a
 - [ ] I have recorded a video showing it working and embedded it in the README ▶️
 - [ ] I have tested all the normal working cases 😎
 - [ ] I have even solved some edge cases (brownie points) 💪
-- [ ] I added my very planned-out approach to the problem at the end of this README 📜
+- [DONE] I added my very planned-out approach to the problem at the end of this README 📜
 
 ## Got Questions❓
 Feel free to check the discussions tab, you might get some help there. Check out that tab before reaching out to us. Also, did you know, the internet is a great place to explore? 😛
@@ -60,3 +60,40 @@ All the best ✨.
 
 ## Developer's Section
 *Add your video here, and your approach to the problem (optional). Leave some comments for us here if you want, we will be reading this :)*
+
+
+Planned-out-approach
+I tried two approaches to solve this problem but none of them worked properly:
+1.Using Express.js:
+  i.I enabled Google Sheets API and linked the sheets with the express.js file After creating a credentials.json by making a service account.
+  ii.Then I used Insomnia to give an API call after passing the range and value in the Body in json format.
+  iii. After giving the API call it worked. The Google Sheets got updated!
+  iv.But beyond that I was not able to do anything! I tried using Google script to synchronize but it requires a web hook to do that!
+
+
+2.Using php: 
+It consists of two main parts:
+
+PHP Script:
+
+Receives JSON data containing product information from the Google Sheet.
+Parses the JSON data into a PHP array.
+Inserts each product record into the zstockprod table in the MySQL database.
+JavaScript Function:
+
+Reads product data from a specified Google Sheet.
+Converts the data into a JSON format.
+Sends the JSON data to the PHP script using a POST request.
+
+I also used ngrok so that google App Script can access my localhost server. ngrock makes your localhost server publicly available!
+
+In simple words
+
+1. Create Google Spreadsheet
+2. Create Google App Script
+3. Create Table @ MySQL Database
+4. Create PHP Program
+5. Start ngrok (ngrok http 80)
+6. Test
+
+It failed at the fourth step! It wouldn't authorize the crdentials and this approrach also failed!
