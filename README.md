@@ -63,7 +63,7 @@ All the best ✨.
 
 Video:https://youtu.be/cQVKeXvQelI
 
-Note:Couldn't find time to put Approach 3 in the video😅!
+Note: Couldn't find time to put Approach 3 in the video😅!
 
 Planned-out-approach 
 I tried three approaches to solve this problem but none of them worked properly:
