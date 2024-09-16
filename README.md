@@ -199,4 +199,4 @@ function buildHeaderRowRequest(sheetId) {
 
 8.Also we can add pivot table and chart in this excel sheet🥳! But the step to achieve this is a little lengthy to write so I will skip it😅!
 
-9. And Finally I have done around 50% of the problem statement!The other 50% part of syncing database to Google Sheets I wasn't able to achieve!
+9. And Finally I have done around 50% of the problem statement! The other 50% part of syncing database to Google Sheets I wasn't able to achieve!
