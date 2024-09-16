@@ -104,7 +104,7 @@ It failed at the fourth step! MySQL wouldn't authorize the credentials and this 
 
 3.Using Node.js and the Express web application framework
 
-I was able to sync Google Sheets to a database via REST API’s. I performed this on a ready made Customer Ordering System Front-End.
+I was able to sync Google Sheets to a database via REST API’s. I performed this on a Customer Ordering System Front-End.
 These were the following steps I followed:
 
 1.I installed the necessary packages and started the project.
@@ -199,4 +199,4 @@ function buildHeaderRowRequest(sheetId) {
 
 8.Also we can add pivot table and chart in this excel sheet🥳! But the step to achieve this is a little lengthy to write so I will skip it😅!
 
-9. And Finally I have done around 50% of the problem statement!
+9. And Finally I have done around 50% of the problem statement!The other 50% part of syncing database to Google Sheets I wasn't able to achieve!
