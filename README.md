@@ -96,4 +96,4 @@ In simple words
 5. Start ngrok (ngrok http 80)
 6. Test
 
-It failed at the fourth step! It wouldn't authorize the crdentials and this approrach also failed!
+It failed at the fourth step! It wouldn't authorize the credentials and this approrach also failed!
