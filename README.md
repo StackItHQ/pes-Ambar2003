@@ -1,3 +1,4 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/AHFn7Vbn)
 # Superjoin Hiring Assignment
 
 ### Welcome to Superjoin's hiring assignment! 🚀
@@ -45,10 +46,10 @@ Once you're done, make sure you **record a video** showing your project working.
 We have a checklist at the bottom of this README file, which you should update as your progress with your assignment. It will help us evaluate your project.
 
 - [ ] My code's working just fine! 🥳
-- [ ] I have recorded a video showing it working and embedded it in the README ▶️
+- [✔] I have recorded a video showing it working and embedded it in the README ▶️
 - [ ] I have tested all the normal working cases 😎
 - [ ] I have even solved some edge cases (brownie points) 💪
-- [ ] I added my very planned-out approach to the problem at the end of this README 📜
+- [✔] I added my very planned-out approach to the problem at the end of this README 📜
 
 ## Got Questions❓
 Feel free to check the discussions tab, you might get some help there. Check out that tab before reaching out to us. Also, did you know, the internet is a great place to explore? 😛
@@ -59,3 +60,143 @@ All the best ✨.
 
 ## Developer's Section
 *Add your video here, and your approach to the problem (optional). Leave some comments for us here if you want, we will be reading this :)*
+
+Video: https://youtu.be/cQVKeXvQelI
+
+Note: Couldn't find time to put Approach 3 in the video😅!
+
+Planned-out-approach 
+I tried three approaches to solve this problem but none of them worked properly:
+
+1.Using Express.js:
+i. I enabled Google Sheets API and linked the sheets with the express.js file After creating a credentials.json by making a service account.
+ii. Then I used Insomnia to give an API call after passing the range and value in the Body in json format.
+iii. After giving the API call it worked. The Google Sheets got updated! 
+iv.But beyond that I was not able to do anything! I tried using Google script to synchronize but it requires a web hook to do that!
+
+
+
+2.Using php: 
+It consists of two main parts:
+
+PHP Script:
+
+Receives JSON data containing product information from the Google Sheet.
+Parses the JSON data into a PHP array.
+Inserts each product record into the zstockprod table in the MySQL database.
+JavaScript Function:
+
+Reads product data from a specified Google Sheet.
+Converts the data into a JSON format.
+Sends the JSON data to the PHP script using a POST request.
+
+I also used ngrok so that google App Script can access my localhost server. ngrock makes your localhost server publicly available!
+
+In simple words:
+1. Create Google Spreadsheet
+2. Create Google App Script
+3. Create Table @ MySQL Database
+4. Create PHP Program
+5. Start ngrok (ngrok http 80)
+6. Test
+
+It failed at the fourth step! MySQL wouldn't authorize the credentials and this approrach also failed!
+
+3.Using Node.js and the Express web application framework
+
+I was able to sync Google Sheets to a database via REST API’s. I performed this on a Customer Ordering System Front-End.
+These were the following steps I followed:
+
+1.I installed the necessary packages and started the project.
+
+
+2. I then created a Client ID by turning on Google Sheets API and adding an OAuth client ID to the project.
+
+
+3.Then I added Google Sign In Button. For signing the user in I wrote this function:
+function onSignIn(user) {
+  var profile = user.getBasicProfile();
+  $('#profile .name').text(profile.getName());
+  $('#profile .email').text(profile.getEmail());
+}
+
+
+4.I then added spreadsheet controls in Spreadsheet.js code with the following code:
+"use strict";
+
+module.exports = function(sequelize, DataTypes) {
+  var Spreadsheet = sequelize.define('Spreadsheet', {
+    id: {type: DataTypes.STRING, allowNull: false, primaryKey: true},
+    sheetId: {type: DataTypes.INTEGER, allowNull: false},
+    name: {type: DataTypes.STRING, allowNull: false}
+  });
+
+  return Spreadsheet;
+};
+
+
+5.Then I created spreadsheets using sheets.js and routes.js.
+
+6. I then Added a header row. For that I wrote the following code in sheets.js:
+   
+   var dataSheetId = spreadsheet.sheets[0].properties.sheetId;
+var requests = [
+  buildHeaderRowRequest(dataSheetId),
+];
+// TODO: Add pivot table and chart.
+var request = {
+  spreadsheetId: spreadsheet.spreadsheetId,
+  resource: {
+    requests: requests
+  }
+};
+self.service.spreadsheets.batchUpdate(request, function(err, response) {
+  if (err) {
+    return callback(err);
+  }
+  return callback(null, spreadsheet);
+
+var COLUMNS = [
+  { field: 'id', header: 'ID' },
+  { field: 'customerName', header: 'Customer Name'},
+  { field: 'productCode', header: 'Product Code' },
+  { field: 'unitsOrdered', header: 'Units Ordered' },
+  { field: 'unitPrice', header: 'Unit Price' },
+  { field: 'status', header: 'Status'}
+];
+
+function buildHeaderRowRequest(sheetId) {
+  var cells = COLUMNS.map(function(column) {
+    return {
+      userEnteredValue: {
+        stringValue: column.header
+      },
+      userEnteredFormat: {
+        textFormat: {
+          bold: true
+        }
+      }
+    }
+  });
+  return {
+    updateCells: {
+      start: {
+        sheetId: sheetId,
+        rowIndex: 0,
+        columnIndex: 0
+      },
+      rows: [
+        {
+          values: cells
+        }
+      ],
+      fields: 'userEnteredValue,userEnteredFormat.textFormat.bold'
+    }
+  };
+}
+
+7.For synchronizing data to the spreadsheet I added a new route to routes.js that will begin a sync.
+
+8.Also we can add pivot table and chart in this excel sheet🥳! But the step to achieve this is a little lengthy to write so I will skip it😅!
+
+9. And Finally I have done around 50% of the problem statement! The other 50% part of syncing database to Google Sheets I wasn't able to achieve!
