@@ -63,11 +63,12 @@ All the best ✨.
 
 Video:https://youtu.be/cQVKeXvQelI
 
-Planned-out-approach I tried two approaches to solve this problem but none of them worked properly: 
-1.Using Express.js: 
-i.I enabled Google Sheets API and linked the sheets with the express.js file After creating a credentials.json by making a service account. 
-ii.Then I used Insomnia to give an API call after passing the range and value in the Body in json format. 
+Planned-out-approach I tried two approaches to solve this problem but none of them worked properly:
+1.Using Express.js:
+i. I enabled Google Sheets API and linked the sheets with the express.js file After creating a credentials.json by making a service account.
+ii. Then I used Insomnia to give an API call after passing the range and value in the Body in json format.
 iii. After giving the API call it worked. The Google Sheets got updated! iv.But beyond that I was not able to do anything! I tried using Google script to synchronize but it requires a web hook to do that!
+
 
 
 2.Using php: 
